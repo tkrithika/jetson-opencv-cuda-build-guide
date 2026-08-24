@@ -142,6 +142,10 @@ Look for:
 CUDA: YES
 cuDNN: YES
 ```
+Here's the confirmation output from a successful build:
+
+![Successful build output showing cuDNN 9.3.0 and OpenCL enabled](./images/cudnn-opencl-output.png)
+
 
 ## 9. Runtime Verification (Python)
 
