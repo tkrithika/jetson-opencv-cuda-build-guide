@@ -100,16 +100,40 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
       -D WITH_CUDA=ON \
       -D WITH_CUDNN=ON \
       -D OPENCV_DNN_CUDA=ON \
-      -D CUDA_ARCH_BIN="7.2" \  
+      -D CUDA_ARCH_BIN="8.7" \
+      -D CUDA_FAST_MATH=ON \
+      -D WITH_CUBLAS=ON \
       -D WITH_TBB=ON \
       -D BUILD_opencv_python3=ON \
       -D BUILD_opencv_python2=OFF \
       -D WITH_QT=OFF \
       -D WITH_GTK=ON \
       -D WITH_OPENGL=ON \
+      -D OPENCV_GENERATE_PKGCONFIG=ON \
+      -D BUILD_TESTS=OFF \
+      -D BUILD_PERF_TESTS=OFF \
       -D BUILD_EXAMPLES=OFF ..
 ```
-Note: Update 'CUDA_ARCH_BIN' based on your jetson model
+
+> **Important:** a backslash `\` only continues the command if it is the very last character
+> on the line. A space after it breaks the command.
+
+Before compiling, scroll up to the summary and check:
+`NVIDIA CUDA: YES`, `NVIDIA GPU arch: 87`, `cuDNN: YES`, and Python 3 pointing to Python 3.10.
+
+If cmake failed or ran with wrong options, clean the build folder before running it again:
+
+    cd ~/opencv/build
+    rm -rf ./*
+**Set `CUDA_ARCH_BIN` for your Jetson.** Using the wrong value builds GPU code your board
+cannot run. Check yours in `jtop` (press 8, INFO: "CUDA Arch BIN").
+
+| Jetson | CUDA_ARCH_BIN |
+| --- | --- |
+| Jetson Nano | 5.3 |
+| Jetson TX2 | 6.2 |
+| Jetson Xavier NX / AGX Xavier | 7.2 |
+| Jetson Orin Nano / Orin NX / AGX Orin | 8.7 |
 
 ## 6. Compile OpenCV
 
