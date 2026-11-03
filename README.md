@@ -76,9 +76,12 @@ Clone the official OpenCV repositories:
 
 ```
 cd ~
-git clone https://github.com/opencv/opencv.git
-git clone https://github.com/opencv/opencv_contrib.git
+git clone --branch 4.10.0 --depth 1 https://github.com/opencv/opencv.git
+git clone --branch 4.10.0 --depth 1 https://github.com/opencv/opencv_contrib.git
 ```
+
+`opencv` and `opencv_contrib` must always use the **same version**. `--depth 1` downloads
+only that release instead of the full history, which is much faster.
 
 ## 4. Create Build Directory
 
