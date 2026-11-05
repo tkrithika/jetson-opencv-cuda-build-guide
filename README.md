@@ -138,6 +138,21 @@ cannot run. Check yours in `jtop` (press 8, INFO: "CUDA Arch BIN").
 | Jetson Xavier NX / AGX Xavier | 7.2 |
 | Jetson Orin Nano / Orin NX / AGX Orin | 8.7 |
 
+## Add Swap Memory (Recommended)
+
+Compiling CUDA code can run out of the Jetson's 8 GB RAM and crash the build ("Killed").
+An 8 GB swap file on the SSD prevents this:
+
+```
+sudo fallocate -l 8G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+free -h
+```
+
+
 ## 6. Compile OpenCV
 
 > This step is resource-intensive and may take 1–2 hours.
