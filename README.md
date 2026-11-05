@@ -178,6 +178,8 @@ make -j$(nproc)
 sudo make install
 sudo ldconfig
 ```
+Run these **inside `~/opencv/build`**. The error `No rule to make target 'install'` means
+you are in the wrong folder. `sudo ldconfig` prints nothing when it succeeds.
 
 ## 8. Verify CUDA Support
 
