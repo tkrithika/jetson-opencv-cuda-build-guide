@@ -203,33 +203,25 @@ Here's the confirmation output from a successful build:
 
 ## 9. Runtime Verification (Python)
 
-You can further confirm GPU availability using Python:
-
-First in your terminal run:
+Confirm Python uses your new build (not NVIDIA's original OpenCV):
 
 ```
-cd ~
+python3 -c "import cv2; print(cv2.__version__, cv2.__file__); print('CUDA devices:', cv2.cuda.getCudaEnabledDeviceCount())"
 ```
 
-This returns you to the home directory.
+Expected: `4.10.0`, a path under `/usr/local/...`, and `CUDA devices: 1`.
+A path under `/usr/lib/...` with `4.8.0` means Python is still loading the original version.
 
-Now start python:
-
-```
-python3
-```
-
-Then run:
+Then confirm OpenCV actually runs code on the GPU:
 
 ```
-import cv2
-print(cv2.getBuildInformation())
-print("CUDA Available:", cv2.cuda.getCudaEnabledDeviceCount() > 0)
+python3 -c "import cv2, numpy as np; g=cv2.cuda_GpuMat(); g.upload(np.zeros((100,100),np.uint8)); r=cv2.cuda.threshold(g,1,255,cv2.THRESH_BINARY); print('GPU op OK')"
 ```
 
-Expected output:
+An error such as "no kernel image is available" means `CUDA_ARCH_BIN` was wrong for your board.
 
-CUDA Available: True
+> **Note:** Do not uninstall NVIDIA's original OpenCV package; other JetPack components depend on it.
+> Your build in `/usr/local` takes priority.
 
 ## 10. Monitoring with jtop (Optional)
 
