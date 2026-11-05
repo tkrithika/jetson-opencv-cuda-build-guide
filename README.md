@@ -162,6 +162,16 @@ free -h
 make -j$(nproc)
 ```
 
+> **Tip:** Over SSH, run the build inside `tmux` so it keeps going if the connection drops:
+> `sudo apt install -y tmux`, then `tmux new -s opencv`. Detach with `Ctrl + B`, then `D`;
+> reattach with `tmux attach -t opencv`.
+
+- Lines starting with `warning:` are harmless; only `error:` stops the build.
+- If the build stops with "Killed", continue with fewer parallel jobs: `make -j4`
+- An interrupted build resumes where it stopped: just run `make -j$(nproc)` again.
+- Optional: switch to the highest power mode first for a faster build:
+  `sudo nvpmodel -m 2` (MAXN_SUPER on Orin Nano with JetPack 6.2).
+
 ## 7. Install OpenCV
 
 ```
