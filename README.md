@@ -250,6 +250,23 @@ python3 -c "import cv2, numpy as np; g=cv2.cuda_GpuMat(); g.upload(np.zeros((100
 
 An error such as "no kernel image is available" means `CUDA_ARCH_BIN` was wrong for your board.
 
+**If the check shows a different version (for example `4.12.0`) or `CUDA devices: 0`:**
+a pip package (`opencv-python`, often installed by other tools such as Ultralytics) is hiding your build. Remove it:
+
+```bash
+pip3 list | grep -i opencv
+pip3 uninstall opencv-python
+```
+
+**If `import cv2` fails with "compiled using NumPy 1.x cannot be run in NumPy 2":**
+this build expects NumPy 1.x. Install it with:
+
+```bash
+pip3 install --user "numpy<2"
+```
+
+Then run the checks above again.
+
 > **Note:** Do not uninstall NVIDIA's original OpenCV package; other JetPack components depend on it.
 > Your build in `/usr/local` takes priority.
 
